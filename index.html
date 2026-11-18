@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Horario Semanal</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header Fijo -->
+    <header class="header">
+        <div class="logo">
+            <i class="fa-solid fa-calendar-days"></i>
+            <span>Mi Horario</span>
+        </div>
+        <nav class="nav-menu">
+            <button id="btn-new-activity" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Nueva Actividad</button>
+            <button id="btn-theme" class="btn btn-secondary"><i class="fa-solid fa-palette"></i> Personalizar Tema</button>
+            <label for="bg-image-input" class="btn btn-secondary cursor-pointer">
+                <i class="fa-solid fa-image"></i> Subir Imagen
+            </label>
+            <input type="file" id="bg-image-input" accept="image/*" style="display: none;">
+        </nav>
+    </header>
+
+    <!-- Hero Section Compacta -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Mi Horario Semanal</h1>
+            <p>Organiza tus días a tu propio estilo</p>
+        </div>
+        <div class="hero-banner" id="hero-banner">
+            <div class="banner-placeholder">
+                <i class="fa-solid fa-image"></i>
+                <span>Banner Visual (Sube una imagen para personalizar)</span>
+            </div>
+            <button id="remove-banner" class="btn-remove-banner" style="display:none;"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+    </section>
+
+    <!-- Panel de Control y Búsqueda -->
+    <section class="controls-section">
+        <div class="search-box">
+            <i class="fa-solid fa-search"></i>
+            <input type="text" id="search-input" placeholder="Buscar actividad o materia...">
+        </div>
+        <div class="filter-days">
+            <button class="filter-btn active" data-day="all">Todos</button>
+            <button class="filter-btn" data-day="Lunes">Lunes</button>
+            <button class="filter-btn" data-day="Martes">Martes</button>
+            <button class="filter-btn" data-day="Miércoles">Miércoles</button>
+            <button class="filter-btn" data-day="Jueves">Jueves</button>
+            <button class="filter-btn" data-day="Viernes">Viernes</button>
+            <button class="filter-btn" data-day="Sábado">Sábado</button>
+            <button class="filter-btn" data-day="Domingo">Domingo</button>
+        </div>
+    </section>
+
+    <!-- Cuadrícula de Horario -->
+    <main class="schedule-container">
+        <div class="schedule-grid" id="schedule-grid">
+            <!-- Se llena dinámicamente con JS -->
+        </div>
+    </main>
+
+    <!-- Modal para Crear/Editar Actividad -->
+    <div class="modal" id="activity-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Nueva Actividad</h3>
+                <button class="close-modal" id="close-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="activity-form">
+                <input type="hidden" id="activity-id">
+                <div class="form-group">
+                    <label for="act-title">Título / Materia</label>
+                    <input type="text" id="act-title" required placeholder="Ej. Matemáticas, Gimnasio...">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="act-day">Día</label>
+                        <select id="act-day">
+                            <option value="Lunes">Lunes</option>
+                            <option value="Martes">Martes</option>
+                            <option value="Miércoles">Miércoles</option>
+                            <option value="Jueves">Jueves</option>
+                            <option value="Viernes">Viernes</option>
+                            <option value="Sábado">Sábado</option>
+                            <option value="Domingo">Domingo</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="act-time">Hora</label>
+                        <select id="act-time">
+                            <option value="08:00">08:00 AM</option>
+                            <option value="09:00">09:00 AM</option>
+                            <option value="10:00">10:00 AM</option>
+                            <option value="11:00">11:00 AM</option>
+                            <option value="12:00">12:00 PM</option>
+                            <option value="13:00">01:00 PM</option>
+                            <option value="14:00">02:00 PM</option>
+                            <option value="15:00">03:00 PM</option>
+                            <option value="16:00">04:00 PM</option>
+                            <option value="17:00">05:00 PM</option>
+                            <option value="18:00">06:00 PM</option>
+                            <option value="19:00">07:00 PM</option>
+                            <option value="20:00">08:00 PM</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="act-desc">Descripción / Ubicación</label>
+                    <textarea id="act-desc" rows="2" placeholder="Ej. Aula 302, Sala B..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Etiqueta de Color</label>
+                    <div class="color-picker-options">
+                        <label class="color-radio" style="background: #722F37;"><input type="radio" name="act-color" value="#722F37" checked></label>
+                        <label class="color-radio" style="background: #e06d88;"><input type="radio" name="act-color" value="#e06d88"></label>
+                        <label class="color-radio" style="background: #2e7d32;"><input type="radio" name="act-color" value="#2e7d32"></label>
+                        <label class="color-radio" style="background: #1565c0;"><input type="radio" name="act-color" value="#1565c0"></label>
+                        <label class="color-radio" style="background: #f57f17;"><input type="radio" name="act-color" value="#f57f17"></label>
+                        <label class="color-radio" style="background: #6a1b9a;"><input type="radio" name="act-color" value="#6a1b9a"></label>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" id="delete-activity" class="btn btn-danger" style="display:none;"><i class="fa-solid fa-trash"></i> Eliminar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Temas -->
+    <div class="modal" id="theme-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Personalizar Tema</h3>
+                <button class="close-modal" id="close-theme-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="theme-options-grid">
+                <div class="theme-card" data-theme="pink" style="background: #FADADD; color: #121212;">
+                    <span class="theme-name">Rosa Pastel (Default)</span>
+                </div>
+                <div class="theme-card" data-theme="mint" style="background: #d4edda; color: #155724;">
+                    <span class="theme-name">Verde Menta</span>
+                </div>
+                <div class="theme-card" data-theme="blue" style="background: #cce5ff; color: #004085;">
+                    <span class="theme-name">Azul Cielo</span>
+                </div>
+                <div class="theme-card" data-theme="dark" style="background: #121212; color: #ffffff;">
+                    <span class="theme-name">Modo Oscuro</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Minimalista -->
+    <footer class="footer">
+        <p>&copy; 2026 Mi Horario Semanal. Organiza tus días al máximo.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
